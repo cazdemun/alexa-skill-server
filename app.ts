@@ -113,8 +113,9 @@ const skillBuilder = Alexa.SkillBuilders.custom()
 
 const skill = skillBuilder.create();
 
-app.post('/handshake', async (req, res) => {
-  console.info("[Server] Can connect")
+app.post('/testhandshake', async (req, res) => {
+  console.info("[Server] Can connect");
+  res.status(200).send('Connection successful!');
 });
 
 app.post('/coggy', async (req, res) => {
