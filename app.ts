@@ -141,15 +141,15 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 });
 
 // Assuming you're using the 'http' module to create the server
-// const server = app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}`);
-// });
+const server = app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
 
-const server = https
-  .createServer(credentials, app)  // Pass the credentials here
-  .listen(PORT, () => {
-    console.log(`Server is running at port ${PORT}`);
-  });
+// const server = https
+//   .createServer(credentials, app)  // Pass the credentials here
+//   .listen(PORT, () => {
+//     console.log(`Server is running at port ${PORT}`);
+//   });
 
 server.on('upgrade', (request, socket, head) => {
   const url = new URL(request.url || '', `http://${request.headers.host}`);
