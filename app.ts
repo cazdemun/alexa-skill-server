@@ -1,6 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import * as Alexa from 'ask-sdk-core';
+import * as https from 'https';
+import * as fs from 'fs';
 import { IntentRequest, Slot, Response } from 'ask-sdk-model';
 import WebSocket from 'ws';
 import dotenv from 'dotenv';
@@ -11,6 +13,14 @@ dotenv.config();
 // TODO: Define the duration of pauses during speech (ex. i wanna... [pause] do this)
 // TODO: Determine the duration for audio capture
 // TODO: Set the timeout duration for awaiting a response
+
+const privateKey = fs.readFileSync('./certificates/key.pem', 'utf8');
+const certificate = fs.readFileSync('./certificates/cert.pem', 'utf8');
+
+const credentials = {
+  key: privateKey,
+  cert: certificate
+};
 
 const wss = new WebSocket.Server({ noServer: true });
 const wsConnections: WebSocket[] = []; // Global list of WebSocket connections
@@ -103,6 +113,10 @@ const skillBuilder = Alexa.SkillBuilders.custom()
 
 const skill = skillBuilder.create();
 
+app.post('/handshake', async (req, res) => {
+  console.info("[Server] Can connect")
+});
+
 app.post('/coggy', async (req, res) => {
   try {
     skill.invoke(req.body)
@@ -126,9 +140,15 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 });
 
 // Assuming you're using the 'http' module to create the server
-const server = app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// const server = app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+// });
+
+const server = https
+  .createServer(credentials, app)  // Pass the credentials here
+  .listen(PORT, () => {
+    console.log(`Server is running at port ${PORT}`);
+  });
 
 server.on('upgrade', (request, socket, head) => {
   const url = new URL(request.url || '', `http://${request.headers.host}`);
