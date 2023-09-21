@@ -1,0 +1,7 @@
+/node_modules
+/coggy
+.env
+app.old.ts
+app.py
+appv2.py
+requirements.txt

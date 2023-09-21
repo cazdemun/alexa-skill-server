@@ -1,0 +1,31 @@
+{
+  "name": "coggy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node app.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^4.17.17",
+    "@types/node": "^18.15.3",
+    "alexa-sdk": "^1.0.25",
+    "ask-sdk-core": "^2.12.1",
+    "ask-sdk-model": "^1.58.0",
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "node-fetch": "^2.6.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.2",
+    "ws": "^8.14.2"
+  },
+  "devDependencies": {
+    "@types/node-fetch": "^2.6.5",
+    "@types/ws": "^8.5.5"
+  }
+}
